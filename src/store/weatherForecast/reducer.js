@@ -1,25 +1,18 @@
-import { fetchForecast } from ".";
+import { searchLocationAction } from ".";
 import createReducer from "../utils/createReducer";
 import { changeForecast } from "./actions";
 
 const initialState = {
-  forecast: 'forecast',
+  foundLocations: []
 }
 
 export default createReducer(
   {
-    [changeForecast]: (state, {payload}) => {
-      const {forecast} = payload
-
+    [searchLocationAction.fulfilled]: (state, {payload}) => {
       return {
-        ...state, forecast
+        ...state, foundLocations:payload
       }
     },
-    [fetchForecast.rejected]: (state, {payload}) => {
-      return {
-        ...state, forecast:payload
-      }
-    }
   },
   initialState
 )

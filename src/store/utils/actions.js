@@ -33,7 +33,6 @@ export const createAsyncAction = (type, asyncFunction) => {
       resolve(payload)
     }
     catch (error) {
-      console.log(error)
       dispatch(rejectedAction(error.message))
       reject(error)
     }
