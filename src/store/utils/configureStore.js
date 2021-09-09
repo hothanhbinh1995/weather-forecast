@@ -10,7 +10,7 @@ const configureStore = (initialState) => {
 
   store.loadedAsyncReducer = {}
 
-  // This function using for hot load reducer (code splitting)
+  // This function using for apply reducer on demand(code splitting)
   store.injectReducer = (key, asyncReducer) => {
     // Don't allow to inject duplicated reducer
     if (store.loadedAsyncReducer[key]) {
