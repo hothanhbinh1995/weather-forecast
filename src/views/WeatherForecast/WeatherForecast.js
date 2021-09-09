@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { withReducer } from "../../store"
-import { changeForecast, weatherForecastReducer } from "../../store/weatherForecast"
+import { changeForecast, fetchForecast, weatherForecastReducer } from "../../store/weatherForecast"
 import { Container, FormControl, InputGroup, Row, Dropdown } from 'react-bootstrap'
 import styled from 'styled-components'
 
@@ -18,8 +18,12 @@ const SuggestionDropdownContent = styled.div`
 
 
 const WeatherForecast = (props) => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const forecast = useSelector(state => state.weatherForecast.forecast)
+
+  useEffect(()=>{
+    dispatch(fetchForecast())
+  })
 
   // const handleTestReduxClick = () => {
   //   dispatch(changeForecast({ forecast: 'changed' }))

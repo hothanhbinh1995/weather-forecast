@@ -1,8 +1,9 @@
+import { fetchForecast } from ".";
 import createReducer from "../utils/createReducer";
 import { changeForecast } from "./actions";
 
 const initialState = {
-  forecast: 'forecast'
+  forecast: 'forecast',
 }
 
 export default createReducer(
@@ -12,6 +13,11 @@ export default createReducer(
 
       return {
         ...state, forecast
+      }
+    },
+    [fetchForecast.rejected]: (state, {payload}) => {
+      return {
+        ...state, forecast:payload
       }
     }
   },
