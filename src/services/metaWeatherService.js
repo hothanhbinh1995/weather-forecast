@@ -1,17 +1,25 @@
-import RestClient from "../utils/request/RestClient";
+import BaseService from "./baseService";
 
-const metaWeatherClient = new RestClient({
-  baseURL: "https://meta-weather.vercel.app/api"
-})
+class MetaWeatherService extends BaseService {
+  constructor() {
+    super({
+      baseURL: "https://meta-weather.vercel.app/api"
+    })
+  }
 
-const searchLocation = async (queryText) => {
-  const {data, status} = await metaWeatherClient.get("location/search/", { params: { query: queryText } })
+  async searchLocation(queryText) {
+    const { data, status } = await this.restClient.get("location/search/", { params: { query: queryText } })
 
-  return {data, status}
+    return { data, status }
+  }
+
+  async getLocation(woeid) {
+    const { data, status } = await this.restClient.get(`location/${woeid}`)
+
+    return { data, status }
+  }
 }
 
-const metaWeatherService = {
-  searchLocation
-}
+const metaWeatherService = new MetaWeatherService()
 
 export default metaWeatherService
