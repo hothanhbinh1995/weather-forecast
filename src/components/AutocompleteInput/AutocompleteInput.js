@@ -1,21 +1,43 @@
+import { isEmpty } from 'lodash'
 import React from 'react'
-import { FormControl, InputGroup } from 'react-bootstrap'
+import { Dropdown, FormControl, InputGroup } from 'react-bootstrap'
+import { KEY_CODES } from '../../constants'
+import { DropdownContent, Wrapper } from './AutocompleteInput.styled'
 
-const AutocompleteInput = (props)=>{
 
-  return <InputGroup>
-    <FormControl
-      {...props}
-    />
-  {/* <SuggestionDropdownContent>
-    <Dropdown.Menu className="w-100 rounded-bottom" show>
-      <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-      <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
-    </Dropdown.Menu>
-  </SuggestionDropdownContent>
-  <InputGroup.Text><i class="bi-search"></i></InputGroup.Text> */}
+const AutocompleteInput = (props) => {
+  const { rightText, suggestionList, focusFirstItemOnShow, onSelect, ...restProps } = props
 
-</InputGroup>
+  return <Wrapper>
+    <InputGroup>
+      <Dropdown onSelect={onSelect} focusFirstItemOnShow={focusFirstItemOnShow} show={!isEmpty(suggestionList)} autoClose>
+        <Dropdown.Toggle as={FormControl} {...restProps}>
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="w-100 rounded-bottom">
+          {suggestionList.map(
+            suggest =>
+              <Dropdown.Item
+                onKeyDown={(e) => {
+                  if(e.keyCode === KEY_CODES.ENTER){
+                    onSelect(suggest.key, e)
+                  }
+                }}
+                key={suggest.key}
+                eventKey={suggest.key}
+              >
+                {suggest.title}
+              </Dropdown.Item>
+          )}
+        </Dropdown.Menu>
+        {rightText && <InputGroup.Text>{rightText}</InputGroup.Text>}
+      </Dropdown>
+    </InputGroup>
+  </Wrapper>
+}
+
+AutocompleteInput.defaultProps = {
+  suggestionList: [],
+  focusFirstItemOnShow: false
 }
 
 export default AutocompleteInput

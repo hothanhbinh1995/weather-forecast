@@ -1,6 +1,5 @@
-import { searchLocationAction } from ".";
+import { clearLocationAction, searchLocationAction } from "./actions";
 import createReducer from "../utils/createReducer";
-import { changeForecast } from "./actions";
 
 const initialState = {
   foundLocations: []
@@ -8,11 +7,18 @@ const initialState = {
 
 export default createReducer(
   {
-    [searchLocationAction.fulfilled]: (state, {payload}) => {
+    [searchLocationAction.fulfilled]: (state, { payload }) => {
+
       return {
-        ...state, foundLocations:payload
+        ...state, foundLocations: payload
       }
     },
+    [clearLocationAction]: (state) => {
+
+      return {
+        ...state, foundLocations: []
+      }
+    }
   },
   initialState
 )
