@@ -1,5 +1,5 @@
 import { nthArg } from "lodash";
-import { ASYNC_ACTION_STATES } from "../../constants";
+import { ASYNC_ACTION_STATES } from "../../appConstants";
 
 export const withActionTypePrefix =
   (typePrefix, deliminator = "/") =>

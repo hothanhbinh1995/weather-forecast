@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Dropdown, FormControl, InputGroup } from "react-bootstrap";
-import { KEY_CODES } from "../../constants";
+import { KEY_CODES } from "../../appConstants";
 import Loader from "../Loader";
 import { DropdownMenu, Wrapper } from "./AutocompleteInput.styled";
 

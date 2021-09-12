@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import { DATE_FORMAT } from "constants";
+import { DATE_FORMAT } from "appConstants";
 import { dateHelpers } from "utils/helpers";
 import WeatherState from "./WeatherState";
 

@@ -1,4 +1,4 @@
-import { ASYNC_ACTION_STATES } from "../../../constants";
+import { ASYNC_ACTION_STATES } from "../../../appConstants";
 import { addAction, removeAction } from "../../asyncActionWatcher";
 
 const removeStateSuffix = (actionType, suffix) =>
