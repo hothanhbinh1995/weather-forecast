@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-
+import {asyncActionWatcherReducer} from './asyncActionWatcher'
 const staticReducers = {
-  // For static reducers
+  asyncActionWatcher: asyncActionWatcherReducer
 }
 
 const createRootReducer = (asyncReducers = {}) =>
