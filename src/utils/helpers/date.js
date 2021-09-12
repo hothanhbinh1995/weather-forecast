@@ -1,9 +1,9 @@
-import dayjs from "dayjs"
+import dayjs from "dayjs";
 
-export const format = (date, format)=>{
-  if(!date){
-    return ''
+export const format = (date, formatType) => {
+  if (!date) {
+    return "";
   }
 
-  return dayjs(date).format(format)
-}
+  return dayjs(date).format(formatType);
+};

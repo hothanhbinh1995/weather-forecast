@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
 
-const createReducer = handleActions
+const createReducer = handleActions;
 
-export default createReducer
+export default createReducer;

@@ -10,4 +10,4 @@ const rotate = keyframes`
   }
 `;
 
-export default rotate
+export default rotate;

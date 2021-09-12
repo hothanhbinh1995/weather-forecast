@@ -1,2 +1,2 @@
-export * from './actions'
-export {default as weatherForecastReducer} from './reducer'
+export * from "./actions";
+export { default as weatherForecastReducer } from "./reducer";

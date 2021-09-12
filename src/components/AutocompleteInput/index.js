@@ -1,3 +1,3 @@
 import AutocompleteInput from "./AutocompleteInput";
 
-export default AutocompleteInput
+export default AutocompleteInput;

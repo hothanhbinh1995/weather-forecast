@@ -1,7 +1,5 @@
-import axios from 'axios';
-import {
-  StatusCodes
-} from 'http-status-codes';
+import axios from "axios";
+import { StatusCodes } from "http-status-codes";
 
 class RestClient {
   constructor(config) {
@@ -11,35 +9,35 @@ class RestClient {
   get(url, config = {}) {
     return this._request(url, {
       ...config,
-      method: 'GET',
+      method: "GET",
     });
   }
 
   post(url, config = {}) {
     return this._request(url, {
       ...config,
-      method: 'POST',
+      method: "POST",
     });
   }
 
   put(url, config = {}) {
     return this._request(url, {
       ...config,
-      method: 'PUT',
+      method: "PUT",
     });
   }
 
   patch(url, config = {}) {
     return this._request(url, {
       ...config,
-      method: 'PATCH',
+      method: "PATCH",
     });
   }
 
   delete(url, config = {}) {
     return this._request(url, {
       ...config,
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -49,5 +47,5 @@ class RestClient {
   }
 }
 
-export {StatusCodes};
-export default RestClient
+export { StatusCodes };
+export default RestClient;

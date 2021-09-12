@@ -1,4 +1,4 @@
-import store from '..';
+import store from "../index";
 
 const withReducer = (key, reducer) => (WrappedComponent) => {
   store.injectReducer(key, reducer);

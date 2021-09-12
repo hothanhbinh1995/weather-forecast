@@ -2,4 +2,4 @@ export const ASYNC_ACTION_STATES = Object.freeze({
   PENDING: "PENDING",
   FULFILLED: "FULFILLED",
   REJECTED: "REJECTED",
-})
+});
