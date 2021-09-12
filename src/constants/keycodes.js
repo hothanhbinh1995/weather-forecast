@@ -1,5 +1,3 @@
-const KEY_CODES = {
+export const KEY_CODES = Object.freeze({
   ENTER: 13
-}
-
-export default KEY_CODES
+})

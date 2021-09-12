@@ -2,20 +2,28 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { withReducer } from "../../store"
 import { clearLocationAction, getLocationAction, searchLocationAction, weatherForecastReducer } from "../../store/weatherForecast"
-import { Container, Row } from 'react-bootstrap'
+import { Col, Container, Form, Navbar, Row } from 'react-bootstrap'
 import AutocompleteInput from "../../components/AutocompleteInput"
-import useDebounceCallback from "../../utils/hooks/useDebounceCallback"
+import {useDebounceCallback} from "../../utils/hooks"
 import Icon from "../../components/Icon"
+import { isEmpty } from "lodash"
+import WeatherCard from "./components/WeatherCard"
+import WeatherInfo from "./components/WeatherInfo"
+import { useAsyncActionWatcher } from "../../utils/hooks"
+import Loader from "../../components/Loader/Loader"
 
-const WeatherForecast = (props) => {
+const WeatherForecast = () => {
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
   const [selectedWoeid, setSelectedWoeid] = useState()
 
   const foundLocations = useSelector(state => state.weatherForecast.foundLocations)
+  const locationWeather = useSelector(state => state.weatherForecast.locationWeather)
 
-  useEffect(()=>{
-    if(selectedWoeid){
+  const [isSearchLocationRunning, isGetLocationRunning] = useAsyncActionWatcher(searchLocationAction, getLocationAction)
+
+  useEffect(() => {
+    if (selectedWoeid) {
       dispatch(getLocationAction(selectedWoeid))
     }
 
@@ -25,7 +33,7 @@ const WeatherForecast = (props) => {
     (queryText) => {
       dispatch(searchLocationAction(queryText))
     },
-    500
+    200
   )
 
   const handleSearchInputChange = (e) => {
@@ -34,30 +42,77 @@ const WeatherForecast = (props) => {
     setSearchText(searchText)
   }
 
-  const handleSelectLocation = (key)=>{
-    const location = foundLocations.find(location=>location.woeid === key)
-    setSearchText(location.title)
+  const handleSelectLocation = (key) => {
+    setSearchText('')
     setSelectedWoeid(key)
     dispatch(clearLocationAction())
   }
 
-  return <Container>
-    <Row>
-      <p className="h1 text-center">Weather forecast</p>
-    </Row>
-    <Row>
-        <AutocompleteInput
-          placeholder="Search your city"
-          onChange={handleSearchInputChange}
-          value={searchText}
-          rightText={<Icon name="bi-search"/>}
-          suggestionList={foundLocations.map(location =>({title:location.title, key: location.woeid}))}
-          focusFirstItemOnShow
-          onSelect={handleSelectLocation}
-        />
+  const haveWeatherInfo = !isEmpty(locationWeather.today)
 
-    </Row>
-  </Container>
+  const renderContent = () => {
+    if (isGetLocationRunning) {
+      return <div className="text-center"><Loader className="fs-1" /></div>
+    }
+    if (!haveWeatherInfo) {
+      return <h5 className="text-center">
+        Please search your city to see the weather forecast</h5>
+    }
+
+    return <>
+      <Row className="pt-3">
+        <WeatherInfo
+          locationName={locationWeather.locationName}
+          date={locationWeather.today.applicable_date}
+          weatherState={locationWeather.today.weather_state_name}
+          weatherStateCode={locationWeather.today.weather_state_abbr}
+          minTemp={locationWeather.today.min_temp}
+          maxTemp={locationWeather.today.max_temp}
+        />
+      </Row>
+      <Row>
+        {
+          locationWeather.forecast.map(
+            weather => (
+              <Col key={weather.applicable_date} className="my-2" sm={4} md={3} lg>
+                <WeatherCard
+                  date={weather.applicable_date}
+                  weatherState={weather.weather_state_name}
+                  weatherStateCode={weather.weather_state_abbr}
+                  minTemp={weather.min_temp}
+                  maxTemp={weather.max_temp}
+                />
+              </Col>
+            ))
+        }
+
+      </Row>
+    </>
+  }
+
+  return <>
+    <Navbar bg="primary" variant="dark">
+      <Container>
+        <Navbar.Brand>Weather Forecast</Navbar.Brand>
+        <Form className="d-flex">
+          <AutocompleteInput
+            placeholder="Search your city"
+            onChange={handleSearchInputChange}
+            value={searchText}
+            isSuggestionLoading={isSearchLocationRunning}
+            rightText={isSearchLocationRunning ? <Loader /> : <Icon name="bi-search" />}
+            suggestionList={foundLocations.map(location => ({ title: location.title, key: location.woeid }))}
+            focusFirstItemOnShow
+            onSelect={handleSelectLocation}
+            emptyText="Not found your city"
+          />
+        </Form>
+      </Container>
+    </Navbar>
+    <Container className="py-3">
+      {renderContent()}
+    </Container>
+  </>
 
 }
 

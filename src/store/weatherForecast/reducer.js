@@ -1,8 +1,12 @@
-import { clearLocationAction, searchLocationAction } from "./actions";
+import { clearLocationAction, searchLocationAction, getLocationAction } from "./actions";
 import createReducer from "../utils/createReducer";
 
 const initialState = {
-  foundLocations: []
+  foundLocations: [],
+  locationWeather: {
+    today: {},
+    forecast: []
+  }
 }
 
 export default createReducer(
@@ -17,6 +21,18 @@ export default createReducer(
 
       return {
         ...state, foundLocations: []
+      }
+    },
+    [getLocationAction.fulfilled]: (state, { payload }) => {
+      const [today, ...forecast] = payload.consolidated_weather
+
+      return {
+        ...state,
+        locationWeather: {
+          today,
+          forecast,
+          locationName: payload.title
+        }
       }
     }
   },

@@ -3,7 +3,7 @@ import BaseService from "./baseService";
 class MetaWeatherService extends BaseService {
   constructor() {
     super({
-      baseURL: "https://meta-weather.vercel.app/api"
+      baseURL: "https://thingproxy.freeboard.io/fetch/https://meta-weather.vercel.app/api"
     })
   }
 

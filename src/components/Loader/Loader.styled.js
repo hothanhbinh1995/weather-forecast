@@ -4,4 +4,5 @@ import Icon from "../Icon"
 
 export const RotateIcon = styled(Icon)`
   animation: ${rotate} 2s linear infinite;
+  display: inline-block;
 `
