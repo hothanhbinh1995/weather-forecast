@@ -8,12 +8,15 @@ const initialState = {};
 
 const renderPage = (Page, renderOptions, state = initialState) => {
   const store = configureStore(state);
+
+  const dispatchSpy = jest.spyOn(store, "dispatch");
+
   const rendered = render(
     <Provider store={store}>{Page}</Provider>,
     renderOptions
   );
 
-  return rendered;
+  return { ...rendered, dispatchSpy };
 };
 
 export default {
