@@ -25,19 +25,6 @@ export const getLocationAction = createAsyncAction(
   }
 );
 
-export const searchLocationEEAction = createAsyncAction(
-  createActionType("SEARCH_LOCATION_EE"),
-  async (queryText) => {
-    if (!queryText) {
-      return [];
-    }
-
-    const { data } = await metaWeatherService.searchLocation(queryText);
-
-    return data;
-  }
-);
-
 export const clearLocationAction = createAction(
   createActionType("CLEAR_LOCATION")
 );

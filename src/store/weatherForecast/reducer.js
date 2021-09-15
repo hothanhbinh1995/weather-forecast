@@ -10,6 +10,7 @@ const initialState = {
   locationWeather: {
     today: {},
     forecast: [],
+    locationName: "",
   },
 };
 

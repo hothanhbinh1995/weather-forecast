@@ -6,19 +6,24 @@ import { Provider } from "react-redux";
 
 const initialState = {};
 
-const renderPage = (Page, renderOptions, state = initialState) => {
-  const store = configureStore(state);
+export const setupStore = (reducers = {}, initState = initialState) => {
+  const store = configureStore(initState);
+  Object.keys(reducers).forEach((reducerName) =>
+    store.injectReducer(reducerName, reducers[reducerName])
+  );
 
-  const dispatchSpy = jest.spyOn(store, "dispatch");
+  store.dispatchSpy = jest.spyOn(store, "dispatch");
+
+  return store;
+};
+
+export const renderPage = (Page, renderOptions, state) => {
+  const store = setupStore({}, state);
 
   const rendered = render(
     <Provider store={store}>{Page}</Provider>,
     renderOptions
   );
 
-  return { ...rendered, dispatchSpy };
-};
-
-export default {
-  renderPage,
+  return { ...rendered, store };
 };
