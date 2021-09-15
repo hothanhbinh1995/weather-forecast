@@ -4,7 +4,7 @@ class MetaWeatherService extends BaseService {
   constructor() {
     super({
       baseURL:
-        "https://thingproxy.freeboard.io/fetch/https://meta-weather.vercel.app/api",
+        "https://binh-ho-cors-proxy.herokuapp.com/https://meta-weather.vercel.app/api",
     });
   }
 
